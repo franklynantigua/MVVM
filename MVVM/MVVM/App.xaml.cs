@@ -15,7 +15,7 @@ namespace MVVM
                 InitializeComponent();
 
             // The root page of your application
-            MainPage = new MasterPage();
+            MainPage = new WelcomePage();
 
             }
 

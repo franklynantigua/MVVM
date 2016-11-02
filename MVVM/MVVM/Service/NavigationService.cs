@@ -18,7 +18,7 @@ namespace MVVM.Service
             switch (pageName)
             {
                 case "AlarmsPage":
-                   await App.Navigator.PushAsync(new AlarmsPage());
+                    await App.Navigator.PushAsync(new AlarmsPage());
                     break;
                 case "ClientsPage":
                     await App.Navigator.PushAsync(new ClientsPage());
@@ -32,10 +32,14 @@ namespace MVVM.Service
                 case "MainPage":
                     await App.Navigator.PopToRootAsync();
                     break;
-                default:
-                    break;
+
             }
 
+        }
+
+        internal void SetMainPage()
+        {
+            App.Current.MainPage = new MasterPage();
         }
     }
 }

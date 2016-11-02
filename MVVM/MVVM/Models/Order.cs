@@ -1,12 +1,13 @@
 ﻿using System;
- 
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MVVM.ViewModels
+namespace MVVM.Models
 {
-    public  class OrderViewModel
+    public class Order
     {
-        
         public string Id { get; set; }
 
         public string Title { get; set; }
@@ -23,7 +24,5 @@ namespace MVVM.ViewModels
         public string Phone { get; set; }
 
         public bool IsDelivered { get; set; }
-
-
     }
 }

@@ -16,6 +16,7 @@ namespace MVVM.ViewModels
         #region Atributes
 
         private NavigationService navigationService;
+        private ApiService apiService;
         #endregion
         #region Properties
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
@@ -30,8 +31,9 @@ namespace MVVM.ViewModels
             Menu = new ObservableCollection<MenuItemViewModel>();
             Orders = new ObservableCollection<OrderViewModel>();
             navigationService = new NavigationService();
+            apiService= new ApiService();
             LoadMenu();
-            loadFakeData();
+           // loadFakeData();
         }
 
         #endregion
@@ -41,7 +43,37 @@ namespace MVVM.ViewModels
         {
             get { return new  RelayCommand<string>(GoTo); }
         
-    }
+        }
+
+        public ICommand StartCommand
+        {
+            get { return new RelayCommand(Start); }
+        }
+
+        private async void Start()
+        {
+            var orders = await apiService.GetAllOrders();
+            Orders.Clear();
+            foreach (var order in orders)
+            {
+                Orders.Add(new OrderViewModel
+                {
+                    Client = order.Client,
+                    CreationDate = order.CreationDate,
+                    DeliveryDate = order.DeliveryDate,
+                    DeliveryInformation= order.DeliveryInformation,
+                    Description = order.Description,
+                    Id = order.Id,
+                    IsDelivered = order.IsDelivered,
+                    Phone = order.Phone,
+                    Title = order.Title,
+
+                    
+                });
+            }
+        
+            navigationService.SetMainPage();
+        }
 
         private void GoTo(string pageName)
         {

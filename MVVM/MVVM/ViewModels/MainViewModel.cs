@@ -22,6 +22,9 @@ namespace MVVM.ViewModels
         public ObservableCollection<MenuItemViewModel> Menu { get; set; }
 
         public ObservableCollection<OrderViewModel> Orders { get; set; }
+        public OrderViewModel NewOrder { get; private set; }
+
+
 
         #endregion
         #region Constructors
@@ -50,7 +53,7 @@ namespace MVVM.ViewModels
             get { return new RelayCommand(Start); }
         }
 
-        private async void Start()
+         private async void Start()
         {
             var orders = await apiService.GetAllOrders();
             Orders.Clear();
@@ -77,7 +80,16 @@ namespace MVVM.ViewModels
 
         private void GoTo(string pageName)
         {
-             navigationService.Navigate(pageName);
+            switch (pageName)
+            {
+                case "NewOrderPage":
+                    NewOrder = new OrderViewModel();
+                    break;
+                 
+            }
+
+
+            navigationService.Navigate(pageName);
         }
         #endregion
         #region Methods

@@ -23,6 +23,7 @@ namespace MVVM.Service
                 if (!response.IsSuccessStatusCode)
                 {
                     return null;
+                    
                 }
 
                 var result = await response.Content.ReadAsStringAsync();
@@ -35,6 +36,29 @@ namespace MVVM.Service
             }
         }
 
+        public async Task<Order> CreateOrder(Order order)
+        {
+            try
+            {
+                var content = JsonConvert.SerializeObject(order);
+                var body = new StringContent(content, Encoding.UTF8, "application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("http://zulu-software.com");
+                var url = "/service/api/Orders";
+                var response = await client.PostAsync(url, body);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Order>(result);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
 }
